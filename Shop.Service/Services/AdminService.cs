@@ -13,6 +13,11 @@ namespace Shop.Logic.Services
 			_dbContext = dbContext;
 		}
 
+		/// <summary>
+		/// Logins the admin.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		/// <returns></returns>
 		public async Task<ResponseModel> LoginAdmin(LoginModel request)
 		{
 			var response = new ResponseModel
@@ -28,7 +33,7 @@ namespace Shop.Logic.Services
 				if (userData is not null)
 				{
 					response.Status = true;
-					response.Message = $"{userData.Id} | {userData.Name} | {userData.Email}";
+					response.Message = $"{userData.Id}|{userData.Name}|{userData.Email}";
 				}
 			}
 			catch (Exception)
@@ -37,6 +42,102 @@ namespace Shop.Logic.Services
 			}
 
 			return response;
+		}
+
+		/// <summary>
+		/// Saves the category.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		/// <returns></returns>
+		public async Task<CategoryModel> SaveCategory(CategoryModel request)
+		{
+			try
+			{
+				var category = new Category
+				{
+					Name = request.Name
+				};
+
+				await _dbContext.AddAsync(category);
+
+				await _dbContext.SaveChangesAsync();
+
+				return request;
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+
+		/// <summary>
+		/// Gets the categories.
+		/// </summary>
+		/// <returns></returns>
+		public async Task<List<CategoryModel>> GetCategories()
+		{
+			var data = await _dbContext.Categories.ToListAsync();
+
+			var categoryList = data.Select(c => new CategoryModel
+			{
+				Id = c.Id,
+				Name = c.Name
+			}).ToList();
+
+			return categoryList;
+		}
+
+		/// <summary>
+		/// Updates the category.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		/// <returns></returns>
+		public async Task<bool> UpdateCategory(CategoryModel request)
+		{
+			try
+			{
+				var flag = false;
+				var categoryUpdate = _dbContext.Categories.FirstOrDefault(c => c.Id == request.Id);
+				if (categoryUpdate is not null)
+				{
+					categoryUpdate.Name = request.Name;
+					_dbContext.Categories.Update(categoryUpdate);
+					await _dbContext.SaveChangesAsync();
+					flag = true;
+				}
+
+				return flag;
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+
+		/// <summary>
+		/// Deletes the category.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		/// <returns></returns>
+		public async Task<bool> DeleteCategory(CategoryModel request)
+		{
+			try
+			{
+				var flag = false;
+				var categoryDelete = _dbContext.Categories.FirstOrDefault(c => c.Id == request.Id);
+				if (categoryDelete is not null)
+				{
+					_dbContext.Categories.Remove(categoryDelete);
+					await _dbContext.SaveChangesAsync();
+					flag = true;
+				}
+
+				return flag;
+			}
+			catch (Exception)
+			{
+				throw;
+			}
 		}
 	}
 }

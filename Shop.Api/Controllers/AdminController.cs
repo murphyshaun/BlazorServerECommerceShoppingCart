@@ -17,12 +17,43 @@ namespace Shop.Api.Controllers
 			_env = env;
 		}
 
-		[HttpPost("AdminLogin")]
+		[HttpPost("login")]
 		public async Task<IActionResult> LoginAdmin(LoginModel request)
 		{
 			var data = await _adminService.LoginAdmin(request);
 
 			return Ok(data);
 		}
+
+		[HttpPost("save-category")]
+		public async Task<IActionResult> SaveCategory(CategoryModel request)
+		{
+			var data = await _adminService.SaveCategory(request);
+
+			return Ok(data);
+		}
+
+		[HttpGet("get-categories")]
+		public async Task<IActionResult> GetCategories()
+		{
+			var categories = await _adminService.GetCategories();
+			return Ok(categories);
+		}
+
+		[HttpPost("update-category")]
+		public async Task<IActionResult> UpdateCategory(CategoryModel request)
+		{
+			var response = await _adminService.UpdateCategory(request);
+			return Ok(response);
+		}
+
+		[HttpPost("delete-category")]
+		public async Task<IActionResult> DeleteCategory(CategoryModel request)
+		{
+			var response = await _adminService.DeleteCategory(request);
+			return Ok(response);
+		}
+
+
 	}
 }

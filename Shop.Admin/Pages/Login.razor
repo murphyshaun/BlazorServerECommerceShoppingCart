@@ -2,6 +2,7 @@
 @using Shop.DataModels.CustomModels;
 @using Shop.Admin.Services;
 
+@inject ProtectedSessionStorage sessionStorage;
 @inject IAdminPanelService adminPanelService;
 @inject NavigationManager navManager;
 
@@ -93,6 +94,9 @@
 </div>
 
 @code {
+	[CascadingParameter]
+	public EventCallback notify { get; set; }
+
 	public LoginModel loginModel { get; set; }
 	public string alertMessage { get; set; }
 
@@ -108,6 +112,13 @@
 
 		if (response.Status)
 		{
+			var userResponse = response.Message.Split("|");
+			await sessionStorage.SetAsync("adminKey", userResponse[0]);
+			await sessionStorage.SetAsync("adminName", userResponse[1]);
+			await sessionStorage.SetAsync("adminEmail", userResponse[2]);
+
+			await notify.InvokeAsync();
+
 			navManager.NavigateTo("/");
 		}
 		else

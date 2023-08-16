@@ -1,0 +1,19 @@
+﻿namespace Shop.Common.Extension
+{
+	public static class ApiEndPointPath
+	{
+		private static string root = "api";
+
+		private static string rootAdmin = $"{root}/admin";
+
+		public static string AdminLogin = $"{rootAdmin}/login";
+
+		public static string AdminSaveCategory = $"{rootAdmin}/save-category";
+
+		public static string AdminUpdateCategory = $"{rootAdmin}/update-category";
+
+		public static string AdminDeleteCategory = $"{rootAdmin}/delete-category";
+
+		public static string AdminGetCategores = $"{rootAdmin}/get-categories";
+	}
+}

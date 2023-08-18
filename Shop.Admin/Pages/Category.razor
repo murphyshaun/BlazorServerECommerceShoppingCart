@@ -1,51 +1,5 @@
 ﻿@page "/category"
 
-@using Shop.DataModels.CustomModels;
-@using Shop.Admin.Services;
-@using Shop.Common.Constant;
-
-@inject ProtectedSessionStorage sessionStorage;
-@inject IAdminPanelService adminPanelService;
-
-<style>
-	.modal {
-		position: fixed;
-		z-index: 1;
-		padding-top: 100px;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		overflow: hidden;
-		background-color: rgba(0, 0, 0, 0.4);
-		display: block;
-	}
-
-	.modal-content {
-		background-color: #fefefe;
-		margin: auto;
-		padding: 20px;
-		border: 1px solid #888;
-		width: 50%;
-		overflow: hidden;
-	}
-
-	.close {
-		color: #aaaaaa;
-		float: right;
-		font-size: 28px;
-		font-weight: bold;
-	}
-
-	.close:hover,
-	.close:focus {
-		color: #000;
-		text-decoration: none;
-		cursor: pointer;
-	}
-
-</style>
-
 @if (categoryModel == null)
 {
 	<p><em>Loading...</em></p>	
@@ -86,7 +40,7 @@ else
 							<th style="width: 15px;">Sr.No</th>
 							<th>Category Name</th>
 							<th style="width: 80px;">Edit</th>
-							<th style="width: 90px;">Delete</th>
+							<th style="width: 80px;">Delete</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -175,97 +129,4 @@ else
 			</div>
 		</div>
 	</div>
-}
-
-@code {
-	[CascadingParameter]
-	public EventCallback notify { get; set; }
-
-	public CategoryModel categoryModel { get; set; }
-	public CategoryModel categoryToDelete { get; set; }
-	public CategoryModel categoryToUpdate { get; set; }
-	public List<CategoryModel> categoryList { get; set; }
-
-	public bool isSuccessPopup { get; set; }
-	public bool isShowDeletePopup { get; set; }
-	public bool isShowEditPopup { get; set; }
-	public string message { get; set; }
-
-	protected override async Task OnAfterRenderAsync(bool firstRender)
-	{
-		if (firstRender)
-			await notify.InvokeAsync();
-	}
-
-	protected override async Task OnInitializedAsync()
-	{
-		categoryModel = new CategoryModel();
-		await GetCategories();
-	}
-
-	private async Task SaveCategory()
-	{
-		await adminPanelService.SaveCategory(categoryModel);
-
-		message = MessageManager.CATEGORY_ADD_SECCESS;
-
-		ToggleSuccessPopup();
-
-		await GetCategories();
-
-		ClearForm();
-	}
-
-	private async Task GetCategories()
-	{
-		categoryList = await adminPanelService.GetCategories();
-	}
-
-	private void ClearForm()
-	{
-		categoryModel = new CategoryModel();
-	}
-
-	private void EditCategoryButtonOnClick(CategoryModel category)
-	{
-		categoryToUpdate = category;
-		ToggleEditPopup();
-	}
-
-	private void DeleteCategoryButtonOnClick(CategoryModel category)
-	{
-		categoryToDelete = category;
-		ToggleDeletePopup();
-	}
-
-	private async Task HandleUpdateCategory()
-	{
-		var flag = await adminPanelService.UpdateCategory(categoryToUpdate);
-		
-		ToggleEditPopup();
-
-		message = flag ? MessageManager.CATEGORY_UPDATE_SECCESS : MessageManager.CATEGORY_UPDATE_FAIL;
-
-		ToggleSuccessPopup();
-		categoryToUpdate = new CategoryModel();
-		await GetCategories();
-	}
-
-	private async Task HandleDeleteCategory()
-	{
-		var flag = await adminPanelService.DeleteCategory(categoryToDelete);
-		ToggleDeletePopup();
-
-		message = flag ? MessageManager.CATEGORY_DELETE_SECCESS : MessageManager.CATEGORY_DELETE_FAIL;
-
-		ToggleSuccessPopup();
-		categoryToDelete = new CategoryModel();
-		await GetCategories();
-	}
-
-	private void ToggleSuccessPopup() => isSuccessPopup = !isSuccessPopup;
-
-	private void ToggleDeletePopup() => isShowDeletePopup = !isShowDeletePopup;
-
-	private void ToggleEditPopup() => isShowEditPopup = !isShowEditPopup;
 }

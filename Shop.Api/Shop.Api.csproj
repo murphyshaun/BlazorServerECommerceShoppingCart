@@ -11,8 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shop.Repository\Shop.DataModels.csproj" />
-    <ProjectReference Include="..\Shop.Service\Shop.Logic.csproj" />
+    <ProjectReference Include="..\Shop.DataModels\Shop.DataModels.csproj" />
+    <ProjectReference Include="..\Shop.Logic\Shop.Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\" />
   </ItemGroup>
 
 </Project>

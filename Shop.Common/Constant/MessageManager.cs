@@ -10,5 +10,8 @@
 
 		public const string CATEGORY_DELETE_SECCESS = "Category deleted successfully!";
 		public const string CATEGORY_DELETE_FAIL = "Category not deleted, try again!";
+		
+		public const string PRODUCT_DELETE_SECCESS = "Product deleted successfully!";
+		public const string PRODUCT_DELETE_FAIL = "Product not deleted, try again!";
 	}
 }

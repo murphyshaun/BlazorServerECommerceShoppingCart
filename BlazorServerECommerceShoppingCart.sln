@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Web", "Shop.Web\Shop.W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Api", "Shop.Api\Shop.Api.csproj", "{579C9569-3B84-4D9C-84C5-0DEDF2DC6197}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Logic", "Shop.Service\Shop.Logic.csproj", "{A8F043C0-EC98-4F33-AEE7-E3CC2F9827C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Logic", "Shop.Logic\Shop.Logic.csproj", "{A8F043C0-EC98-4F33-AEE7-E3CC2F9827C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.DataModels", "Shop.Repository\Shop.DataModels.csproj", "{395EA609-308B-4FBA-A44A-39A2F05FC7D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.DataModels", "Shop.DataModels\Shop.DataModels.csproj", "{395EA609-308B-4FBA-A44A-39A2F05FC7D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.Common", "Shop.Common\Shop.Common.csproj", "{E380E27D-3A72-4B3E-B435-1CA7BC90EFD4}"
 EndProject

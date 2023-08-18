@@ -1,9 +1,9 @@
-﻿using Shop.Common.Extension;
+﻿using Shop.Common.Constant;
 using Shop.DataModels.CustomModels;
 
 namespace Shop.Admin.Services
 {
-	public class AdminPanelService : IAdminPanelService
+    public class AdminPanelService : IAdminPanelService
 	{
 		private readonly HttpClient _httpClient;
 
@@ -66,6 +66,39 @@ namespace Shop.Admin.Services
 			var response = await _httpClient.PostAsJsonAsync(ApiEndPointPath.AdminDeleteCategory, categoryModel);
 
 			return await response.Content.ReadFromJsonAsync<bool>();
+		}
+
+		/// <summary>
+		/// Gets the products.
+		/// </summary>
+		/// <returns></returns>
+		public async Task<List<ProductModel>> GetProducts()
+		{
+			return await _httpClient.GetFromJsonAsync<List<ProductModel>>(ApiEndPointPath.AdminGetProducts);
+		}
+
+		/// <summary>
+		/// Deletes the product.
+		/// </summary>
+		/// <param name="productId">The product identifier.</param>
+		/// <returns></returns>
+		public async Task<bool> DeleteProduct(int productId)
+		{
+			var response = await _httpClient.DeleteAsync($"{ApiEndPointPath.AdminDeleteProduct}/{productId}");
+
+			return await response.Content.ReadFromJsonAsync<bool>();
+		}
+
+		/// <summary>
+		/// Saves the product.
+		/// </summary>
+		/// <param name="productModel">The product model.</param>
+		/// <returns></returns>
+		public async Task<ProductModel> SaveProduct(ProductModel productModel)
+		{
+			var response = await _httpClient.PostAsJsonAsync(ApiEndPointPath.AdminSaveProduct, productModel);
+
+			return await response.Content.ReadFromJsonAsync<ProductModel>();
 		}
 	}
 }
